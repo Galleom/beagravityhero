@@ -86,9 +86,7 @@ public class GravityTriangle : MonoBehaviour {
         if (transparent)
         {
             transparency.Insert(0, 0.9f);
-            transparency.Insert(0, 0.8f);
             transparency.Insert(0, 0.7f);
-            transparency.Insert(0, 0.6f);
             transparency.Insert(0, 0.5f);
             transparency.Insert(0, 0.4f);
             transparency.Insert(0, 0.3f);
@@ -132,7 +130,6 @@ public class GravityTriangle : MonoBehaviour {
             }
         }
         move_x.Reverse();
-
     }
     public void setY(float y)
     {
