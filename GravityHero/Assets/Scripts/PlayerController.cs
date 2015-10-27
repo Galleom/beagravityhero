@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float airSpeed;
     //public float tilt;
 
+
     Rigidbody2D rb;
     private float baseGrav;
     private int gravitySide = 2;//moveX = 0, moveY = 0, 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool moving = false;
     private bool onGravSelection = false;
     private float speedX = 0, speedY = 0;
+    private LineRenderer line;
 
     public float groundCheckDistance = 0.18f;
     public float groundCheckSize = 1f;
@@ -27,13 +29,14 @@ public class PlayerController : MonoBehaviour
     public float decelerateSpeedMultiplier = 0.5f;
     public float minMouseMove = 0.3f;
     public float arrowsDistance = 0.3f;
-
+    public Camera camera;
     // Use this for initialization
     void Start()
     {
         moving = false;
         baseGrav = Physics2D.gravity.y;
         rb = GetComponent<Rigidbody2D>();
+        line = GetComponent<LineRenderer>();
         sprite = transform.Find("Sprite");
         groundCheck = transform.Find("groundCheck");
         groundCheck.localPosition = new Vector2(0, -groundCheckDistance);
@@ -42,6 +45,8 @@ public class PlayerController : MonoBehaviour
         arrows[1] = transform.Find("Tri Right");
         arrows[2] = transform.Find("Tri Up");
         arrows[3] = transform.Find("Tri Left");
+
+        line.enabled = false;
     }
 
     public void setGravitySide(int side)
@@ -82,49 +87,10 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     //public Boundary boundary;
-
-    void FixedUpdate()
-    {
-        speedX = rb.velocity.x;
-        speedY = rb.velocity.y;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            startPos = Input.mousePosition;
-        }
-        if (Input.GetMouseButton(0))
-        {
-            if (Vector2.Distance(startPos, Input.mousePosition) >= minMouseMove)
-            {
-                moving = true;
-                if ((gravitySide == 2) || (gravitySide == 6))
-                {
-                    speedX = Mathf.Cos(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
-                }
-                else
-                {
-                    speedY = (Input.mousePosition.y > startPos.y ? 1 : -1) * Mathf.Sin(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
-                }
-            }
-        }
-        if (!moving)
-        {
-            if ((gravitySide == 2) || (gravitySide == 6))
-            {
-                speedX *= decelerateSpeedMultiplier;
-            }
-            else
-            {
-                speedY *= decelerateSpeedMultiplier;
-            }
-        }
-
-        rb.velocity = new Vector2(speedX, speedY);
-
-    }
-
+    
     public void selectGravitySide(int side)
     {
+        line.enabled = false;
         onGravSelection = false;
         switch (side)
         {
@@ -201,15 +167,63 @@ public class PlayerController : MonoBehaviour
             selectGravitySide(0);
         }
     }
+
+    void FixedUpdate()
+    {
+        speedX = rb.velocity.x;
+        speedY = rb.velocity.y;
+
+        if (Input.GetMouseButton(0))
+        {
+            if (Vector2.Distance(startPos, Input.mousePosition) >= minMouseMove)
+            {
+                line.SetPosition(0, camera.ScreenToWorldPoint(startPos) + Vector3.forward);
+                line.SetPosition(1, camera.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward);
+                line.enabled = true;
+                if ((gravitySide == 2) || (gravitySide == 6))
+                {
+                    speedX = Mathf.Cos(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
+                }
+                else
+                {
+                    speedY = (Input.mousePosition.y > startPos.y ? 1 : -1) * Mathf.Sin(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
+                }
+            }
+            else
+            {
+                line.enabled = false;
+            }
+        }
+        if (!moving)
+        {
+            if ((gravitySide == 2) || (gravitySide == 6))
+            {
+                speedX *= decelerateSpeedMultiplier;
+            }
+            else
+            {
+                speedY *= decelerateSpeedMultiplier;
+            }
+        }
+        rb.velocity = new Vector2(speedX, speedY);
+    }
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPos = Input.mousePosition;
+            line.SetPosition(0, camera.ScreenToWorldPoint(startPos) + Vector3.forward);
+            line.SetPosition(1, camera.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward);
+            moving = false;
+        }
         if (Input.GetMouseButtonUp(0))
         {
+            line.enabled = false;
             moving = false;
         }
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
         grounded = Physics2D.Linecast(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif, 1 << LayerMask.NameToLayer("Ground"));
-        Debug.DrawLine(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif);
+        //Debug.DrawLine(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif);
         /*if (grounded)
         {
             if (Input.GetKeyDown(KeyCode.S))
