@@ -34,6 +34,7 @@ public class Portal : MonoBehaviour
         if (active && other.tag == "Player")
         {
             print("Vitoria!");
+            Camera.main.GetComponent<CameraFollow>().setFollow(Camera.main.transform);
             Destroy(other.gameObject);
         }
     }

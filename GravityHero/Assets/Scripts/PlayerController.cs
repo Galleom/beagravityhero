@@ -19,17 +19,17 @@ public class PlayerController : MonoBehaviour
     private bool grounded = false;			// Whether or not the player is grounded.
     private bool moving = false;
     private bool onGravSelection = false;
-    private float speedX = 0, speedY = 0;
-    private LineRenderer line;
 
+    private LineRenderer line;
+    private Vector2 speed;
     public float groundCheckDistance = 0.18f;
     public float groundCheckSize = 1f;
 
     private Vector3 startPos;
     public float decelerateSpeedMultiplier = 0.5f;
     public float minMouseMove = 0.3f;
+    public float minMouseDeleteArrows = 1f;
     public float arrowsDistance = 0.3f;
-    public Camera camera;
     // Use this for initialization
     void Start()
     {
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         baseGrav = Physics2D.gravity.y;
         rb = GetComponent<Rigidbody2D>();
         line = GetComponent<LineRenderer>();
+        line.sortingLayerName = "UI";
         sprite = transform.Find("Sprite");
         groundCheck = transform.Find("groundCheck");
         groundCheck.localPosition = new Vector2(0, -groundCheckDistance);
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
         arrows[1] = transform.Find("Tri Right");
         arrows[2] = transform.Find("Tri Up");
         arrows[3] = transform.Find("Tri Left");
+        speed = new Vector2(0, 0);
+        selectGravitySide(0);
 
         line.enabled = false;
     }
@@ -64,29 +67,30 @@ public class PlayerController : MonoBehaviour
         {
             case 2: // Down
                 Physics2D.gravity = new Vector2(0, baseGrav);
+                Physics.gravity = new Vector3(0, baseGrav, 0);
                 groundCheck.localPosition = new Vector2(0, -groundCheckDistance);
                 groundCheckDif = new Vector2(groundCheckSize, 0);
                 break;
             case 4: // Right
                 Physics2D.gravity = new Vector2(-baseGrav, 0);
+                Physics.gravity = new Vector3(-baseGrav, 0, 0);
                 groundCheck.localPosition = new Vector2(groundCheckDistance, 0);
                 groundCheckDif = new Vector2(0, groundCheckSize);
                 break;
             case 6: // Up
                 Physics2D.gravity = new Vector2(0, -baseGrav);
+                Physics.gravity = new Vector3(0, -baseGrav, 0);
                 groundCheck.localPosition = new Vector2(0, groundCheckDistance);
                 groundCheckDif = new Vector2(groundCheckSize, 0);
                 break;
             case 8: // Left
                 Physics2D.gravity = new Vector2(baseGrav, 0);
+                Physics.gravity = new Vector3(baseGrav, 0, 0);
                 groundCheck.localPosition = new Vector2(-groundCheckDistance, 0);
                 groundCheckDif = new Vector2(0, groundCheckSize);
                 break;
         }
     }
-
-    // Update is called once per frame
-    //public Boundary boundary;
     
     public void selectGravitySide(int side)
     {
@@ -128,7 +132,7 @@ public class PlayerController : MonoBehaviour
         if (side != 0)
             setGravitySide(side);
     }
-    void OnMouseUp()
+    void OnMouseUpAsButton()
     {
         if (grounded && !onGravSelection)
         {
@@ -168,25 +172,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void FixedUpdate()
     {
-        speedX = rb.velocity.x;
-        speedY = rb.velocity.y;
+        speed.x = rb.velocity.x;
+        speed.y = rb.velocity.y;
 
         if (Input.GetMouseButton(0))
         {
             if (Vector2.Distance(startPos, Input.mousePosition) >= minMouseMove)
             {
-                line.SetPosition(0, camera.ScreenToWorldPoint(startPos) + Vector3.forward);
-                line.SetPosition(1, camera.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward);
+                line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
+                line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
                 line.enabled = true;
+                if (onGravSelection)
+                {
+                    if (Vector2.Distance(startPos, Input.mousePosition) >= minMouseDeleteArrows)
+                    {
+                        selectGravitySide(0);
+                    }
+                }
                 if ((gravitySide == 2) || (gravitySide == 6))
                 {
-                    speedX = Mathf.Cos(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
+                    speed.x = Mathf.Cos(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
                 }
                 else
                 {
-                    speedY = (Input.mousePosition.y > startPos.y ? 1 : -1) * Mathf.Sin(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
+                    speed.y = (Input.mousePosition.y > startPos.y ? 1 : -1) * Mathf.Sin(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
                 }
             }
             else
@@ -198,23 +210,23 @@ public class PlayerController : MonoBehaviour
         {
             if ((gravitySide == 2) || (gravitySide == 6))
             {
-                speedX *= decelerateSpeedMultiplier;
+                speed.x *= decelerateSpeedMultiplier;
             }
             else
             {
-                speedY *= decelerateSpeedMultiplier;
+                speed.y *= decelerateSpeedMultiplier;
             }
         }
-        rb.velocity = new Vector2(speedX, speedY);
+        rb.velocity = speed;
     }
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             startPos = Input.mousePosition;
-            line.SetPosition(0, camera.ScreenToWorldPoint(startPos) + Vector3.forward);
-            line.SetPosition(1, camera.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward);
             moving = false;
+            line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward*transform.position.z));
+            line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * transform.position.z));
         }
         if (Input.GetMouseButtonUp(0))
         {

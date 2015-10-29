@@ -20,6 +20,7 @@ public class GravityTriangle : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         sr.material.color = new Color(1.0f, 1.0f, 1.0f, 0);
         player = transform.parent.gameObject;
+        transform.gameObject.SetActive(false);
     }
 
 
@@ -78,7 +79,7 @@ public class GravityTriangle : MonoBehaviour {
     }
     public void resetPosition()
     {
-        transform.localPosition = new Vector3(0, 0, 0);
+        transform.localPosition = new Vector3(0, 0, transform.localPosition.z);
     }
 
     public void setTransparency(bool transparent)
@@ -180,7 +181,7 @@ public class GravityTriangle : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if ((move_x.Count == 0)&&(move_y.Count == 0)&&(transparency.Count == 0))
+        if ((move_x.Count == 0) && (move_y.Count == 0) && (transparency.Count == 0))
         {
             player.GetComponent<PlayerController>().selectGravitySide(side);
         }
