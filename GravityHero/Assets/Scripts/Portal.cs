@@ -9,13 +9,15 @@ public class Portal : MonoBehaviour
     private SpriteRenderer sprite;
     private ParticleSystem pe;
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         sprite = GetComponent<SpriteRenderer>();
         pe = GetComponent<ParticleSystem>();
         updateTransparency();
     }
 
-    void updateTransparency() {
+    void updateTransparency()
+    {
         sprite.color = new Color(1f, 1f, 1f, active ? activeTransparency : inactiveTransparency);
         pe.enableEmission = active;
     }

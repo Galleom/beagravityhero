@@ -26,10 +26,14 @@ public class PlayerController : MonoBehaviour
     public float groundCheckSize = 1f;
 
     private Vector3 startPos;
+    private ParticleSystem ps;
+
     public float decelerateSpeedMultiplier = 0.5f;
     public float minMouseMove = 0.3f;
     public float minMouseDeleteArrows = 1f;
     public float arrowsDistance = 0.3f;
+
+    public int particlesOnChange = 4;
     // Use this for initialization
     void Start()
     {
@@ -50,6 +54,8 @@ public class PlayerController : MonoBehaviour
         selectGravitySide(0);
 
         line.enabled = false;
+
+        ps = transform.Find("Particles").GetComponent<ParticleSystem>();
     }
 
     public void setGravitySide(int side)
@@ -59,6 +65,7 @@ public class PlayerController : MonoBehaviour
         gravitySide = side;
         rb.velocity = new Vector2(0, 0);
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Object");
+        ps.Emit(particlesOnChange);
         foreach (GameObject obj in objs)
         {
             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -173,8 +180,24 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPos = Input.mousePosition;
+            moving = false;
+            line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward*transform.position.z));
+            line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * transform.position.z));
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            line.enabled = false;
+            moving = false;
+        }
+        // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
+        grounded = Physics2D.Linecast(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif, 1 << LayerMask.NameToLayer("Ground"));
+
+
         speed.x = rb.velocity.x;
         speed.y = rb.velocity.y;
 
@@ -218,42 +241,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         rb.velocity = speed;
-    }
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            startPos = Input.mousePosition;
-            moving = false;
-            line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward*transform.position.z));
-            line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * transform.position.z));
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            line.enabled = false;
-            moving = false;
-        }
-        // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-        grounded = Physics2D.Linecast(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif, 1 << LayerMask.NameToLayer("Ground"));
-        //Debug.DrawLine(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif);
-        /*if (grounded)
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                setGravitySide(2);
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                setGravitySide(4);
-            }
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                setGravitySide(6);
-            }
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                setGravitySide(8);
-            }
-        }*/
+
     }
 }
