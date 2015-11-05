@@ -1,0 +1,213 @@
+fileFormatVersion: 2
+guid: 0af13d21f4741604dae8b10207cf5845
+timeCreated: 1440952009
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: button_start_1-normal
+    21300002: button_reset_2-pressed
+    21300004: button_menu_2-pressed
+    21300006: button_settings_2-pressed
+    21300008: button_share_2-pressed
+    21300010: button_start_2-pressed
+    21300012: button_reset_1-normal
+    21300014: button_menu_1-normal
+    21300016: button_settings_1-normal
+    21300018: buttons_share_1-normal
+    21300020: button_resume_1-normal
+    21300022: button_pause_1-normal
+    21300024: button_resume_2-pressed
+    21300026: button_pause_2-pressed
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -3
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: button_start_1-normal
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 383
+        width: 273
+        height: 296
+      alignment: 9
+      pivot: {x: .39539811, y: .542354465}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_reset_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 446
+        width: 88
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_menu_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 453
+        width: 88
+        height: 66
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_settings_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 437
+        width: 88
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_share_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 418
+        width: 124
+        height: 117
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_start_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 6
+        width: 265
+        height: 302
+      alignment: 9
+      pivot: {x: .39539811, y: .542354524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_reset_1-normal
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 299
+        width: 88
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_menu_1-normal
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 306
+        width: 88
+        height: 66
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_settings_1-normal
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 300
+        width: 88
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: buttons_share_1-normal
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 247
+        width: 124
+        height: 117
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_resume_1-normal
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 178
+        width: 72
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_pause_1-normal
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 178
+        width: 74
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_resume_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 43
+        width: 72
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: button_pause_2-pressed
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 39
+        width: 80
+        height: 92
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

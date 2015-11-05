@@ -98,7 +98,13 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    
+    public void resetGravity()
+    {
+        gravitySide = 2;
+        Physics2D.gravity = new Vector2(0, baseGrav);
+        Physics.gravity = new Vector3(0, baseGrav, 0);
+    }
+
     public void selectGravitySide(int side)
     {
         line.enabled = false;

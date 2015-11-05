@@ -37,7 +37,9 @@ public class Portal : MonoBehaviour
         {
             print("Vitoria!");
             Camera.main.GetComponent<CameraFollow>().setFollow(Camera.main.transform);
-            Destroy(other.gameObject);
+            GameplayControls.Instance.ShowVictory();
+            GameplayControls.Instance.HidePlayer();
+            //Destroy(other.gameObject);
         }
     }
 }

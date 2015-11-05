@@ -6,8 +6,9 @@ public class ctrlMenu : MonoBehaviour {
     //public string playScene;
 	// Use this for initialization
 
-	public void Play(){
-		Application.LoadLevel("scene_base");
+	public void Play(string stageName)
+    {
+		Application.LoadLevel(stageName);
 		//Debug.Log ("Nova Cena");
 	}
 
