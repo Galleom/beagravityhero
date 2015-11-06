@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     private float baseGrav;
     private int gravitySide = 2;//moveX = 0, moveY = 0, 
+    private int facingSide = 0;
     private Transform sprite;
+    private Animator animator;
     private Transform groundCheck;          // A position marking where to check if the player is grounded
     private Transform[] arrows;          // A position marking where to check if the player is grounded
     private Vector3 groundCheckDif;        
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public float minMouseDeleteArrows = 1f;
     public float arrowsDistance = 0.3f;
 
+
     public int particlesOnChange = 4;
     // Use this for initialization
     void Start()
@@ -40,9 +43,14 @@ public class PlayerController : MonoBehaviour
         moving = false;
         baseGrav = Physics2D.gravity.y;
         rb = GetComponent<Rigidbody2D>();
+        groundCheckDif = new Vector3(groundCheckSize, 0, 0);
         line = GetComponent<LineRenderer>();
         line.sortingLayerName = "UI";
         sprite = transform.Find("Sprite");
+        animator = sprite.GetComponent<Animator>();
+        animator.SetInteger("animation", 0);
+
+        facingSide = 1;
         groundCheck = transform.Find("groundCheck");
         groundCheck.localPosition = new Vector2(0, -groundCheckDistance);
         arrows = new Transform[4];
@@ -76,25 +84,25 @@ public class PlayerController : MonoBehaviour
                 Physics2D.gravity = new Vector2(0, baseGrav);
                 Physics.gravity = new Vector3(0, baseGrav, 0);
                 groundCheck.localPosition = new Vector2(0, -groundCheckDistance);
-                groundCheckDif = new Vector2(groundCheckSize, 0);
+                groundCheckDif = new Vector3(groundCheckSize, 0, 0);
                 break;
             case 4: // Right
                 Physics2D.gravity = new Vector2(-baseGrav, 0);
                 Physics.gravity = new Vector3(-baseGrav, 0, 0);
                 groundCheck.localPosition = new Vector2(groundCheckDistance, 0);
-                groundCheckDif = new Vector2(0, groundCheckSize);
+                groundCheckDif = new Vector3(0, groundCheckSize, 0);
                 break;
             case 6: // Up
                 Physics2D.gravity = new Vector2(0, -baseGrav);
                 Physics.gravity = new Vector3(0, -baseGrav, 0);
                 groundCheck.localPosition = new Vector2(0, groundCheckDistance);
-                groundCheckDif = new Vector2(groundCheckSize, 0);
+                groundCheckDif = new Vector3(groundCheckSize, 0, 0);
                 break;
             case 8: // Left
                 Physics2D.gravity = new Vector2(baseGrav, 0);
                 Physics.gravity = new Vector3(baseGrav, 0, 0);
                 groundCheck.localPosition = new Vector2(-groundCheckDistance, 0);
-                groundCheckDif = new Vector2(0, groundCheckSize);
+                groundCheckDif = new Vector3(0, groundCheckSize, 0);
                 break;
         }
     }
@@ -199,10 +207,15 @@ public class PlayerController : MonoBehaviour
         {
             line.enabled = false;
             moving = false;
+            animator.SetInteger("animation", grounded ? 0 : 2);
         }
         // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-        grounded = Physics2D.Linecast(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif, 1 << LayerMask.NameToLayer("Ground"));
 
+        grounded = Physics2D.Linecast(groundCheck.position + groundCheckDif, groundCheck.position - groundCheckDif, 1 << LayerMask.NameToLayer("Ground"));
+        if (grounded)
+        {
+            animator.SetInteger("animation", 0);
+        }
 
         speed.x = rb.velocity.x;
         speed.y = rb.velocity.y;
@@ -213,6 +226,7 @@ public class PlayerController : MonoBehaviour
             {
                 line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
                 line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
+                animator.SetInteger("animation", grounded ? 1 : 2);
                 line.enabled = true;
                 if (onGravSelection)
                 {
@@ -228,6 +242,39 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     speed.y = (Input.mousePosition.y > startPos.y ? 1 : -1) * Mathf.Sin(Vector2.Angle(Vector2.right, Input.mousePosition - startPos) * Mathf.Deg2Rad) * (grounded ? groundSpeed : airSpeed) * Time.deltaTime;
+                }
+
+                switch (gravitySide)
+                {
+                    case 2: // Down
+                        if (facingSide != (speed.x > 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.x > 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 4: // Right
+                        if (facingSide != (speed.y > 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.y > 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 6: // Up
+                        if (facingSide != (speed.x < 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.x < 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 8: // Left
+                        if (facingSide != (speed.y < 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.y < 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                            sprite.localPosition = new Vector3(-sprite.localPosition.x, sprite.localPosition.y, sprite.localPosition.z);
+                        }
+                        break;
                 }
             }
             else
