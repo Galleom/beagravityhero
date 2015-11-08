@@ -8,18 +8,26 @@ public class Portal : MonoBehaviour
     public bool active = false;
     private SpriteRenderer sprite;
     private ParticleSystem pe;
+    private ParticleSystem pe2;
     // Use this for initialization
     void Start ()
     {
         sprite = GetComponent<SpriteRenderer>();
         pe = GetComponent<ParticleSystem>();
+        pe2 = transform.Find("Effect2").GetComponent<ParticleSystem>();
         updateTransparency();
+    }
+
+    void setparticles(bool visible)
+    {
+        pe.enableEmission = visible;
+        pe2.enableEmission = visible;
     }
 
     void updateTransparency()
     {
         sprite.color = new Color(1f, 1f, 1f, active ? activeTransparency : inactiveTransparency);
-        pe.enableEmission = active;
+        setparticles(active);
     }
 
     public void setActive(bool newActive) {
@@ -30,15 +38,18 @@ public class Portal : MonoBehaviour
         }
     }
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    void setVictory()
+    {
+        print("Vitoria!");
+        Camera.main.GetComponent<CameraFollow>().setFollow(Camera.main.transform);
+        GameplayControls.Instance.ShowVictory();
+        GameplayControls.Instance.HidePlayer();
+    }
+    void OnTriggerStay2D(Collider2D other)
     {
         if (active && other.tag == "Player")
         {
-            print("Vitoria!");
-            Camera.main.GetComponent<CameraFollow>().setFollow(Camera.main.transform);
-            GameplayControls.Instance.ShowVictory();
-            GameplayControls.Instance.HidePlayer();
+            setVictory();
             //Destroy(other.gameObject);
         }
     }

@@ -39,10 +39,4 @@ public class Rotator : MonoBehaviour {
         }
         transform.rotation = toAngle;
     }
- 
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 }

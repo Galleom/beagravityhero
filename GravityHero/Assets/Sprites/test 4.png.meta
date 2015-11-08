@@ -1,0 +1,275 @@
+fileFormatVersion: 2
+guid: 6316dedf0f7eb3541ae4c09c2c047460
+timeCreated: 1446615178
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: test 4_0
+    21300002: test 4_1
+    21300004: test 4_2
+    21300006: test 4_3
+    21300008: test 4_4
+    21300010: test 4_5
+    21300012: test 4_6
+    21300014: test 4_7
+    21300016: test 4_8
+    21300018: test 4_9
+    21300020: test 4_10
+    21300022: test 4_11
+    21300024: test 4_12
+    21300026: test 4_13
+    21300028: test 4_14
+    21300030: test 4_15
+    21300032: test 4_16
+    21300034: test 4_17
+    21300036: test 4_18
+    21300038: test 4_19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: test 4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 648
+        width: 900
+        height: 1669
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_1
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 1206
+        width: 901
+        height: 1111
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_2
+      rect:
+        serializedVersion: 2
+        x: 2755
+        y: 2218
+        width: 164
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_3
+      rect:
+        serializedVersion: 2
+        x: 2465
+        y: 2132
+        width: 176
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_4
+      rect:
+        serializedVersion: 2
+        x: 3065
+        y: 2127
+        width: 79
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_5
+      rect:
+        serializedVersion: 2
+        x: 2500
+        y: 1639
+        width: 186
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_6
+      rect:
+        serializedVersion: 2
+        x: 2952
+        y: 1645
+        width: 156
+        height: 279
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_7
+      rect:
+        serializedVersion: 2
+        x: 2552
+        y: 1316
+        width: 156
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_8
+      rect:
+        serializedVersion: 2
+        x: 2972
+        y: 1259
+        width: 172
+        height: 172
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_9
+      rect:
+        serializedVersion: 2
+        x: 3103
+        y: 1418
+        width: 122
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_10
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 717
+        width: 531
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_11
+      rect:
+        serializedVersion: 2
+        x: 1594
+        y: 688
+        width: 470
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_12
+      rect:
+        serializedVersion: 2
+        x: 2509
+        y: 890
+        width: 299
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_13
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 265
+        width: 369
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_14
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 280
+        width: 267
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_15
+      rect:
+        serializedVersion: 2
+        x: 2325
+        y: 330
+        width: 191
+        height: 462
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_16
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 158
+        width: 165
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_17
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 0
+        width: 284
+        height: 201
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_18
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 10
+        width: 277
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: test 4_19
+      rect:
+        serializedVersion: 2
+        x: 1591
+        y: 187
+        width: 166
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

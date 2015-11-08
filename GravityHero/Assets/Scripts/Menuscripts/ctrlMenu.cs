@@ -3,21 +3,89 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class ctrlMenu : MonoBehaviour {
-    //public string playScene;
-	// Use this for initialization
+    // Use this for initialization
+    [SerializeField]
+    private GameObject settingsMenu;
+    [SerializeField]
+    private GameObject creditsScreen;
+    [SerializeField]
+    private GameObject Panel;
+    [SerializeField]
+    private GameObject soundToggle;
+    //[SerializeField]
+    //private GameObject bigX;
+    private bool soundOn;
 
-	public void Play(string stageName)
+    public static ctrlMenu Instance;
+    void Awake()
+    {
+        // Register the singleton
+        if (Instance != null)
+        {
+            Debug.LogError("Multiple instances of GameplayControls!");
+        }
+        
+        soundOn = (PlayerPrefs.GetString("music") != "False");
+        soundToggle.GetComponent<Toggle>().isOn = soundOn;
+        updateSoundToggle();
+        Instance = this;
+    }
+
+    public void Play(string stageName)
     {
 		Application.LoadLevel(stageName);
-		//Debug.Log ("Nova Cena");
-	}
+        //Debug.Log ("Nova Cena");
+    }
 
-	public void Option(){
-		//Application.LoadLevel("");
-		Debug.Log ("Tela de Opcoes");
-	}
-	public void Exit(){
-		//Application.Quit();
-		Debug.Log ("Sair");
+    public void OpenOptions()
+    {
+        settingsMenu.SetActive(true);
+        Panel.SetActive(false);
+    }
+    public void CloseOptions()
+    {
+        settingsMenu.SetActive(false);
+        Panel.SetActive(true);
+    }
+
+    public void OpenCredits()
+    {
+        creditsScreen.SetActive(true);
+        Panel.SetActive(false);
+    }
+    public void CloseCredits()
+    {
+        creditsScreen.SetActive(false);
+        Panel.SetActive(true);
+    }
+    public void updateSoundToggle()
+    {
+        if (soundOn)
+        {
+            AudioListener.volume = 1f;
+        }
+        else
+        {
+            AudioListener.volume = 0f;
+        }
+    }
+    public void ToogleMusic()
+    {
+        soundOn = soundToggle.GetComponent<Toggle>().isOn;//!soundOn;
+        PlayerPrefs.SetString("music", soundOn.ToString());
+        updateSoundToggle();
+        //SetSoundsVolume(musicToggleOn, toogleSoundFx.isOn);
+    }
+    
+    private void SetSoundsVolume(bool musicToggleOn, bool soundFxToggleOn)
+    {
+        float fadeTime = 0.1f;/*
+        if (musicToggleOn && soundFxToggleOn) allSoundsOn.TransitionTo(fadeTime);
+        if (!musicToggleOn && !soundFxToggleOn) muteAllSounds.TransitionTo(fadeTime);
+        if (!musicToggleOn && soundFxToggleOn) muteMusic.TransitionTo(fadeTime);
+        if (musicToggleOn && !soundFxToggleOn) muteSoundFx.TransitionTo(fadeTime);*/
+    }
+    public void Exit(){
+
 	}
 }

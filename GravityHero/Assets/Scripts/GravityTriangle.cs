@@ -23,9 +23,15 @@ public class GravityTriangle : MonoBehaviour {
         transform.gameObject.SetActive(false);
     }
 
+    public void setActive(bool active)
+    {
+        transform.gameObject.SetActive(false);
+        selected = false;
+    }
 
     public void setOut(float dist)
     {
+        selected = false;
         setTransparency(true);
         switch (side)
         {
@@ -45,8 +51,9 @@ public class GravityTriangle : MonoBehaviour {
         StartCoroutine(waitAndSleep());
     }
     public void activate(float dist)
-    {        
+    {
         resetPosition();
+        selected = true;
         transform.gameObject.SetActive(true);
         setTransparency(false);
         switch (side)
@@ -68,13 +75,13 @@ public class GravityTriangle : MonoBehaviour {
     private IEnumerator waitAndSleep()
     {
         //yield return new WaitForSeconds(5);
-        if (((move_x.Count > 0)|| (move_y.Count > 0)|| (transparency.Count > 0))&&(selected))
+        while (((move_x.Count > 0)|| (move_y.Count > 0)|| (transparency.Count > 0)))
         {
             yield return null;
         }
-        if (selected)
+        if (!selected)
         {
-            transform.gameObject.SetActive(false);
+            setActive(false);
         }
     }
     public void resetPosition()
