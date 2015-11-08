@@ -24,8 +24,13 @@ public class ctrlMenu : MonoBehaviour {
         {
             Debug.LogError("Multiple instances of GameplayControls!");
         }
+<<<<<<< HEAD
         
         soundOn = (PlayerPrefs.GetString("music") != "False");
+=======
+
+        soundOn = PlayerPrefs.GetString("music") == "true";
+>>>>>>> origin/master
         soundToggle.GetComponent<Toggle>().isOn = soundOn;
         updateSoundToggle();
         Instance = this;
@@ -71,7 +76,11 @@ public class ctrlMenu : MonoBehaviour {
     }
     public void ToogleMusic()
     {
+<<<<<<< HEAD
         soundOn = soundToggle.GetComponent<Toggle>().isOn;//!soundOn;
+=======
+        soundOn = !soundOn;
+>>>>>>> origin/master
         PlayerPrefs.SetString("music", soundOn.ToString());
         updateSoundToggle();
         //SetSoundsVolume(musicToggleOn, toogleSoundFx.isOn);

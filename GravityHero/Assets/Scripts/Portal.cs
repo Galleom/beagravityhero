@@ -20,6 +20,10 @@ public class Portal : MonoBehaviour
 
     void setparticles(bool visible)
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         pe.enableEmission = visible;
         pe2.enableEmission = visible;
     }

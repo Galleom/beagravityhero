@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float arrowsDistance = 0.3f;
     public int maxSpeedMouseDistance;
 
+
     public int particlesOnChange = 4;
     // Use this for initialization
     void Start()
@@ -228,6 +229,7 @@ public class PlayerController : MonoBehaviour
             {
                 line.SetPosition(0, Camera.main.ScreenToWorldPoint(startPos + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
                 line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * (transform.position.z - Camera.main.transform.position.z)));
+                animator.SetInteger("animation", grounded ? 1 : 2);
                 line.enabled = true;
                 if (onGravSelection)
                 {
@@ -295,6 +297,39 @@ public class PlayerController : MonoBehaviour
                             facingSide = (speed.y < 0 ? 1 : -1);
                             sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
                             //sprite.localPosition = new Vector3(-sprite.localPosition.x, sprite.localPosition.y, sprite.localPosition.z);
+                        }
+                        break;
+                }
+
+                switch (gravitySide)
+                {
+                    case 2: // Down
+                        if (facingSide != (speed.x > 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.x > 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 4: // Right
+                        if (facingSide != (speed.y > 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.y > 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 6: // Up
+                        if (facingSide != (speed.x < 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.x < 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                        }
+                        break;
+                    case 8: // Left
+                        if (facingSide != (speed.y < 0 ? 1 : -1))
+                        {
+                            facingSide = (speed.y < 0 ? 1 : -1);
+                            sprite.localScale = new Vector3(-sprite.localScale.x, sprite.localScale.y, sprite.localScale.z);
+                            sprite.localPosition = new Vector3(-sprite.localPosition.x, sprite.localPosition.y, sprite.localPosition.z);
                         }
                         break;
                 }
